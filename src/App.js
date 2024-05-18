@@ -4,6 +4,7 @@ import OrderSummary from "./components/OrderSummary";
 import SplitBillOptions from "./components/SplitBillOptions";
 import SplitBill from "./components/SplitBill";
 import Payment from "./components/Payment";
+import PaymentConfirmation from "./components/PaymentConfirmation";
 import "./App.css";
 
 const App = () => {
@@ -34,6 +35,10 @@ const App = () => {
           <Route
             path="/payment"
             element={<Payment splitDetails={splitDetails} />}
+          />
+          <Route
+            path="/payment-confirmation"
+            element={<PaymentConfirmation splitDetails={splitDetails} />}
           />
         </Routes>
       </div>
