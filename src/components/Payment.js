@@ -84,19 +84,19 @@ const Payment = ({ splitDetails }) => {
         <div className="flex flex-col items-center">
           <input
             type="text"
-            value="4012-8888-8888-1881"
+            defaultValue={"4012-8888-8888-1881"}
             placeholder="Card number"
             className="w-full px-3 py-2 border rounded mb-2"
           />
           <input
             type="text"
-            value={"12/25"}
+            defaultValue={"12/25"}
             placeholder="Expiration MM / YY"
             className="w-full px-3 py-2 border rounded mb-2"
           />
           <input
             type="password"
-            value={"123"}
+            defaultValue={"123"}
             placeholder="CVC"
             className="w-full px-3 py-2 border rounded"
           />
