@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const OrderSummary = ({ nextStep }) => {
+const OrderSummary = ({ setSplitDetails }) => {
+  const navigate = useNavigate();
+
   const orderItems = [
     { name: "Bufalina - Large", price: 5.0 },
     { name: "Calzone", price: 5.0 },
@@ -40,13 +43,16 @@ const OrderSummary = ({ nextStep }) => {
 
       <div className="flex justify-between">
         <button
-          onClick={() => nextStep()}
-          className="text-purple-600 py-2 px-4 rounded hover:text-white"
+          onClick={() => navigate("/split-options")}
+          className="text-purple py-2 px-4 rounded hover:text-white"
         >
           Split the Bill
         </button>
         <button
-          onClick={() => nextStep()}
+          onClick={() => {
+            setSplitDetails({ share: 98.94 });
+            navigate("/payment");
+          }}
           className="bg-purple-600 text-white py-2 px-4 rounded"
         >
           Pay full bill

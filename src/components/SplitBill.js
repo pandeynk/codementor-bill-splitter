@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const SplitBill = ({ splitOption, nextStep }) => {
+const SplitBill = ({ splitOption, setSplitDetails }) => {
+  const navigate = useNavigate();
   const [totalPeople, setTotalPeople] = useState(1);
   const [peoplePaying, setPeoplePaying] = useState(1);
   const [customAmount, setCustomAmount] = useState("");
+  const BILL_AMOUNT = 98.94;
 
   const handleIncrement = (setter) => {
     setter((prev) => prev + 1);
@@ -16,21 +19,37 @@ const SplitBill = ({ splitOption, nextStep }) => {
   const handleNext = () => {
     let share;
     if (splitOption === "equal") {
-      share = (98.94 / totalPeople).toFixed(2);
+      //share = (BILL_AMOUNT / totalPeople).toFixed(2);
+      share = ((BILL_AMOUNT * peoplePaying) / totalPeople).toFixed(2);
     } else if (splitOption === "custom") {
       share = customAmount;
     } else if (splitOption === "items") {
-      // Here you would add logic to calculate based on selected items
-      share = "Calculated amount based on items";
+      share = BILL_AMOUNT;
     }
-    nextStep({ share });
+    setSplitDetails({ share });
+    navigate("/payment");
   };
 
-  const shareAmount = ((98.94 * peoplePaying) / totalPeople).toFixed(2);
+  let shareAmount = 0;
+  if (splitOption === "equal") {
+    shareAmount = ((BILL_AMOUNT * peoplePaying) / totalPeople).toFixed(2);
+  } else if (splitOption === "custom") {
+    shareAmount = customAmount;
+  } else {
+    shareAmount = BILL_AMOUNT;
+  }
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-semibold mb-4">Divide the bill equally</h2>
+      {splitOption === "custom" && (
+        <h2 className="text-2xl font-semibold mb-4">Pay custom amount</h2>
+      )}
+      {splitOption === "euqal" && (
+        <h2 className="text-2xl font-semibold mb-4">Divide the bill equally</h2>
+      )}
+      {splitOption === "items" && (
+        <h2 className="text-2xl font-semibold mb-4">Pay for your items</h2>
+      )}
       {splitOption === "equal" && (
         <>
           <div className="flex justify-between items-center mb-4">
@@ -87,7 +106,7 @@ const SplitBill = ({ splitOption, nextStep }) => {
           <input
             type="number"
             value={customAmount}
-            onChange={(e) => setCustomAmount(e.target.value)}
+            onChange={(e) => setCustomAmount(Number(e.target.value))}
             className="w-full px-3 py-2 border rounded"
           />
         </div>
@@ -95,11 +114,11 @@ const SplitBill = ({ splitOption, nextStep }) => {
       {/* Additional UI for splitting by items can be added here */}
       <div className="flex justify-between mt-6">
         <p>Left To Pay</p>
-        <p>${shareAmount}</p>
+        <p>${BILL_AMOUNT - shareAmount}</p>
       </div>
       <div className="flex justify-between mt-2">
         <p>Your share</p>
-        <p>${shareAmount}</p>
+        <p>${shareAmount || 0}</p>
       </div>
       <button
         onClick={handleNext}
@@ -108,7 +127,7 @@ const SplitBill = ({ splitOption, nextStep }) => {
         Confirm
       </button>
       <button
-        onClick={() => nextStep({ share: "0.00" })}
+        onClick={() => navigate("/split-options")}
         className="text-red-600 mt-4"
       >
         Remove split
