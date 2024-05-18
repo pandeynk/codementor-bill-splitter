@@ -1,38 +1,27 @@
+/* App.css */
+
+body {
+  @apply bg-gray-100 text-gray-900;
+}
+
 .App {
-  text-align: center;
+  @apply max-w-lg mx-auto my-8 p-4 bg-white rounded-lg;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button {
+  @apply transition-all duration-300;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button:hover {
+  @apply bg-purple-700;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+input,
+select {
+  @apply transition-all duration-300;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input:focus,
+select:focus {
+  @apply outline-none ring-2 ring-purple-600;
 }
