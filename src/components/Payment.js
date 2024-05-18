@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-//import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Payment = ({ splitDetails }) => {
-  //const location = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [tipPercentage, setTipPercentage] = useState(0.1);
   const [customTip, setCustomTip] = useState("");
@@ -15,6 +16,17 @@ const Payment = ({ splitDetails }) => {
   const total = parseFloat(splitDetails.share);
   const tipAmount = (total * tipPercentage).toFixed(2);
   const finalAmount = (total + parseFloat(tipAmount)).toFixed(2);
+
+  const handlePaymentSuccess = () => {
+    const transactionDate = new Date().toLocaleString();
+    navigate("/payment-confirmation", {
+      state: {
+        amountPaid: finalAmount,
+        remainingAmount: (98.94 - finalAmount).toFixed(2),
+        transactionDate,
+      },
+    });
+  };
 
   return (
     <div className="p-4">
@@ -63,38 +75,49 @@ const Payment = ({ splitDetails }) => {
         </p>
       </div>
       <div className="mb-4">
-        <button className="bg-black text-white py-2 px-4 rounded w-full flex items-center justify-center mb-4">
+        <button
+          className="bg-black text-white py-2 px-4 rounded w-full flex items-center justify-center mb-4"
+          onClick={handlePaymentSuccess}
+        >
           Pay with Apple Pay
         </button>
         <div className="flex flex-col items-center">
           <input
             type="text"
+            defaultValue={"4012-8888-8888-1881"}
             placeholder="Card number"
             className="w-full px-3 py-2 border rounded mb-2"
           />
           <input
             type="text"
+            defaultValue={"12/25"}
             placeholder="Expiration MM / YY"
             className="w-full px-3 py-2 border rounded mb-2"
           />
           <input
-            type="text"
+            type="password"
+            defaultValue={"123"}
             placeholder="CVC"
             className="w-full px-3 py-2 border rounded"
           />
         </div>
-      </div>
-      <div className="text-center mt-2">
-        <button className="bg-purple-700 text-white py-2 px-4 rounded w-full flex items-center justify-center mb-4">
-          Pay with Card
+        <button
+          className="bg-purple-600 text-white py-2 px-4 rounded w-full mt-4"
+          onClick={handlePaymentSuccess}
+        >
+          Pay Now
         </button>
       </div>
       <div className="text-center text-gray-500 text-sm mt-4">
-        <p>100% Secure payments powered by Qlub_</p>
+        <p>100% Secure payments powered by Test</p>
         <p>
-          By using Qlub_, you accept our{" "}
+          By using Test, you accept our{" "}
           <a href="#" className="text-purple-600">
-            Terms and Conditions
+            privacy policy
+          </a>{" "}
+          and{" "}
+          <a href="#" className="text-purple-600">
+            terms and conditions
           </a>
         </p>
       </div>
