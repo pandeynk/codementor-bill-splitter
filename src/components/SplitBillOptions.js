@@ -1,9 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const SplitBillOptions = ({ nextStep, setSplitOption }) => {
+const SplitBillOptions = ({ setSplitOption }) => {
+  const navigate = useNavigate();
+
   const handleOptionSelect = (option) => {
     setSplitOption(option);
-    nextStep();
+    navigate("/split-bill");
   };
 
   return (

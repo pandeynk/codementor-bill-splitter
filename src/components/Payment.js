@@ -1,12 +1,11 @@
 import React, { useState } from "react";
+//import { useLocation } from "react-router-dom";
 
 const Payment = ({ splitDetails }) => {
+  //const location = useLocation();
+
   const [tipPercentage, setTipPercentage] = useState(0.1);
   const [customTip, setCustomTip] = useState("");
-
-  const handleTipChange = (e) => {
-    setTipPercentage(parseFloat(e.target.value));
-  };
 
   const handleCustomTipChange = (e) => {
     setCustomTip(e.target.value);
@@ -65,11 +64,6 @@ const Payment = ({ splitDetails }) => {
       </div>
       <div className="mb-4">
         <button className="bg-black text-white py-2 px-4 rounded w-full flex items-center justify-center mb-4">
-          <img
-            src="/apple-pay-logo.png"
-            alt="Apple Pay"
-            className="w-6 h-6 mr-2"
-          />{" "}
           Pay with Apple Pay
         </button>
         <div className="flex flex-col items-center">
@@ -89,6 +83,11 @@ const Payment = ({ splitDetails }) => {
             className="w-full px-3 py-2 border rounded"
           />
         </div>
+      </div>
+      <div className="text-center mt-2">
+        <button className="bg-purple-700 text-white py-2 px-4 rounded w-full flex items-center justify-center mb-4">
+          Pay with Card
+        </button>
       </div>
       <div className="text-center text-gray-500 text-sm mt-4">
         <p>100% Secure payments powered by Qlub_</p>
